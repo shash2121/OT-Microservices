@@ -11,7 +11,7 @@ pipeline{
                 script{
                         sh '''
                             docker build -t sha2121/empms-db:${VERSION} .
-                            docker login -u admin -p Shashwat@21
+                            docker login -u sha2121 -p $CREDS
                             docker push  sha2121/empms-db:${VERSION}
                             docker rmi sha2121/empms-db:${VERSION}
                         '''

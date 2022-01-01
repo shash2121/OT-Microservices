@@ -8,7 +8,7 @@ pipeline{
             steps{
                 dir("${env.WORKSPACE}/mysql"){
                 script{
-                    withCredentials([usernameColonPassword(credentialsId: 'docker', variable: 'docker_password')]) {
+                    withCredentials([string(credentialsId: 'docker', variable: 'docker_password')]) {
                              sh '''
                                 docker build -t sha2121/empms-db:${VERSION} .
                                 docker login -u admin -p $docker_password 

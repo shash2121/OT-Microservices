@@ -1,0 +1,22 @@
+pipeline{
+    agent any 
+    environment{
+        VERSION = "${currentBuild.number}"
+    }
+    stages{
+        stage("docker build & docker push"){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'docker', variable: 'docker_password')]) {
+                             sh '''
+                                docker build -t sha2121/empms-db:${VERSION} .
+                                docker login -u admin -p $docker_password 
+                                docker push  sha2121/empms-db:${VERSION}
+                                docker rmi sha2121/empms-db:${VERSION}
+                            '''
+                    }
+                }
+            }
+        }
+    }
+}

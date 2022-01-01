@@ -9,13 +9,12 @@ pipeline{
             steps{
                 dir("${env.WORKSPACE}/mysql"){
                 script{
-                             sh '''
-                                docker build -t sha2121/empms-db:${VERSION} .
-                                docker login -u admin -p $CREDS 
-                                docker push  sha2121/empms-db:${VERSION}
-                                docker rmi sha2121/empms-db:${VERSION}
-                            '''
-                    
+                        sh '''
+                            docker build -t sha2121/empms-db:${VERSION} .
+                            docker login -u admin -p Shashwat@21
+                            docker push  sha2121/empms-db:${VERSION}
+                            docker rmi sha2121/empms-db:${VERSION}
+                        '''
                     }
                 }
             }

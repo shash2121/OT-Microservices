@@ -17,6 +17,13 @@ spec:
       - image: sha2121/empms-attendance:1
         imagePullPolicy: Always
         name: "empms-attendance"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limiits:
+            cpu: 150m
+            memory: 200Mi   
         ports:
         - containerPort: 8081
         env:

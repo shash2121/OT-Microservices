@@ -31,12 +31,12 @@ spec:
           value: "/app/config.yaml"
         volumeMounts:
         - name: volume
-          mountPath: /app/config.yaml  
+          mountPath: /app/config.yaml
+          subPath: config.yaml  
       volumes:
       - name: volume
         hostPath:
           path: /home/opstree/project/OT-Microservices/attendance/k8s-manifests/config.yaml
-          type: File
 ---
 apiVersion: v1
 kind: Service

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "empms-attendance"
+  namespace: "ot-microservices"
+spec:
+  selector:
+    matchLabels:
+      app: "empms-attendance"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "empms-attendance"
+    spec:
+      containers:
+      - image: sha2121/empms-attendance:1
+        imagePullPolicy: Always
+        name: "empms-attendance"
+        ports:
+        - containerPort: 8081
+        env:
+        - name: CONFIG_FILE
+          value: "/app/config.yaml"
+        volumeMounts:
+        - name: elasticsearch
+          mountPath: /app/config.yaml  
+      volume:
+      - name: volume
+        hostPath:
+          path: ./config.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: attendance-service
+  namespace: "ot-microservices"
+spec:
+  selector:
+    app: empms-attendance
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+  type: ClusterIP

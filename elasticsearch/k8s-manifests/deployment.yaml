@@ -32,16 +32,13 @@ spec:
           value: -Xmx512m -Xms512m
         - name: ELASTIC_PASSWORD
           value: elastic
+        envFrom:
+        - configMapRef:
+            name: es-config  
         volumeMounts:
-        - mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
-          name: db-storage
         - name: elasticsearch
           mountPath: /usr/share/elasticsearch/data    
       volumes:
-        - name: db-storage
-          hostPath:
-          configMap:
-            name: es-config
         - name: elasticsearch
           emptyDir: {}      
 ---

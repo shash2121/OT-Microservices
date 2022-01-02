@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "empms-db"
+  namespace: "ot-microservices"
+spec:
+  selector:
+    matchLabels:
+      app: "empms-db"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "empms-db"
+    spec:
+      containers:
+      - image: sha2121/empms-db
+        imagePullPolicy: Always
+        name: "empms-db"
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD 
+          value: password
+        - name: MYSQL_DATABASE
+          value: attendancedb    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+  namespace: "ot-microservices"
+spec:
+  selector:
+    app: empms-db
+  ports:
+    - name: http
+      port: 3306
+      targetPort: 3306  
+  type: ClusterIP            

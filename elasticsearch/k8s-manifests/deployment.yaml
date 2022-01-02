@@ -35,12 +35,11 @@ spec:
         envFrom:
         - configMapRef:
             name: es-config  
-      #   volumeMounts:
-      #   - name: elasticsearch
-      #     mountPath: /usr/share/elasticsearch/data    
-      # volumes:
-      #   - name: elasticsearch
-      #     emptyDir: {}      
+        volumeMounts:
+        - name: elasticsearch
+          mountPath: /usr/share/elasticsearch/data    
+      volumes:
+        - name: elasticsearch    
 ---
 apiVersion: v1
 kind: Service

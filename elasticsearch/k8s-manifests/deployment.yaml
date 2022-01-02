@@ -40,7 +40,7 @@ spec:
       volumes:
         - name: db-storage
           hostPath:
-            path: ../elasticsearch.yaml
+            path: ./elasticsearch.yml
             type: File
         - name: elasticsearch
           emptyDir: {}      
@@ -54,10 +54,10 @@ spec:
   selector:
     app: empms-elasticsearch
   ports:
-    - protocol: TCP
+    - name: http
       port: 9200
       targetPort: 9200
-    - protocol: TCP
+    - name: http
       port: 9300
       targetPort: 9300  
   type: ClusterIP            

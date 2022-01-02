@@ -9,7 +9,7 @@ pipeline{
             steps{
                 dir("${env.WORKSPACE}/elasticsearch/k8s-manifests"){
                 script{
-                    sh 'kubectl apply -f deployment'
+                    sh 'kubectl apply -f deployment.yaml'
                 }
                 }
             }

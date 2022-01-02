@@ -16,13 +16,6 @@ spec:
       containers:
       - image: sha2121/empms-es:33
         imagePullPolicy: Always
-        resources:
-            requests:
-              memory: "256Mi"
-              cpu: "200m"
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
         name: "empms-elasticsearch"
         ports:
         - containerPort: 9200

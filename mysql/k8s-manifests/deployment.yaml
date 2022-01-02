@@ -14,7 +14,7 @@ spec:
         app: "empms-db"
     spec:
       containers:
-      - image: sha2121/empms-db
+      - image: sha2121/empms-db:17
         imagePullPolicy: Always
         name: "empms-db"
         ports:

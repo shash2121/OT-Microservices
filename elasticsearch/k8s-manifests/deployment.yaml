@@ -40,8 +40,8 @@ spec:
       volumes:
         - name: db-storage
           hostPath:
-            path: ./elasticsearch.yml
-            type: File
+          configMap:
+            name: es-config
         - name: elasticsearch
           emptyDir: {}      
 ---
@@ -61,3 +61,16 @@ spec:
       port: 9300
       targetPort: 9300  
   type: ClusterIP            
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: es-config
+  namespace: "ot-microservices"
+data:
+  cluster.name: "ot-microservices"
+  network.host: "0.0.0.0"
+  discovery.type: "single-node"
+  xpack.license.self_generated.type: trial
+  xpack.security.enabled: "true"
+  xpack.monitoring.collection.enabled: "true"

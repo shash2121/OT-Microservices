@@ -20,7 +20,7 @@ spec:
           requests:
             cpu: 100m
             memory: 128Mi
-          limiits:
+          limits:
             cpu: 150m
             memory: 200Mi   
         name: "empms-elasticsearch"

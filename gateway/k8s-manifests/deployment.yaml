@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "empms-salary"
+  namespace: "ot-microservices"
+spec:
+  selector:
+    matchLabels:
+      app: "empms-salary"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "empms-salary"
+    spec:
+      containers:
+      - image: sha2121/empms-salary:1
+        imagePullPolicy: Always
+        name: "empms-salary"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 150m
+            memory: 200Mi   
+        ports:
+        - containerPort: 8082
+        env:
+        - name: FROM
+          value: "${FROM}"
+        - name: SMTP_USERNAME
+          value: "${SMTP_USERNAME}"
+        - name: SMTP_PASSWORD
+          value: "${SMTP_PASSWORD}"
+        - name: SMTP_SERVER
+          value: "${SMTP_SERVER}"
+        - name: SMTP_PORT
+          value: "${SMTP_PORT}"
+        - name: ELASTIC_USERNAME
+          value: "elastic"
+        - name: ELASTIC_PASSWORD
+          value: "elastic"
+        - name: ELASTIC_HOST
+          value: "elastic"
+        - name: ELASTIC_PORT
+          value: "9200"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: salary-service
+  namespace: "ot-microservices"
+spec:
+  selector:
+    app: empms-salary
+  ports:
+    - name: http
+      port: 8082
+      targetPort: 8082
+  type: ClusterIP

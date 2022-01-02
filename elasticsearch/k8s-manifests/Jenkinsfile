@@ -10,7 +10,7 @@ pipeline{
                 dir("${env.WORKSPACE}/elasticsearch/k8s-manifests"){
                 script{
                         sh '''
-                            kubectl apply -f deployment.yaml
+                            kubectl apply -f deployment.yaml --context minikube
                         '''
                     }
                 }

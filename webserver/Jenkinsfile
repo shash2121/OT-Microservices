@@ -1,0 +1,23 @@
+pipeline{
+    agent any
+    environment{
+        VERSION = "${currentBuild.number}"
+        CREDS = credentials('docker')
+    }
+    stages{
+        stage("docker build & docker push"){
+            steps{
+                dir("${env.WORKSPACE}/webserver"){
+                script{
+                        sh '''
+                            docker build -t sha2121/empms-webserver:${VERSION} .
+                            docker login -u sha2121 -p $CREDS
+                            docker push  sha2121/empms-webserver:${VERSION}
+                            docker rmi sha2121/empms-webserver:${VERSION}
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}

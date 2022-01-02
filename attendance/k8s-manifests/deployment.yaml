@@ -28,11 +28,11 @@ spec:
         - containerPort: 8081
         env:
         - name: CONFIG_FILE
-          value: "/app/config.yaml"
+          value: "/app/config"
         volumeMounts:
         - name: volume
-          mountPath: /app/config.yaml
-          subPath: config.yaml  
+          mountPath: /app/config
+          subPath: config  
       volumes:
       - name: volume
         configMap:

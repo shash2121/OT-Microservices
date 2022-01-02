@@ -14,7 +14,7 @@ spec:
         app: "empms-webserver"
     spec:
       containers:
-      - image: sha2121/empms-webserver:1
+      - image: sha2121/empms-webserver:2
         imagePullPolicy: Always
         name: "empms-webserver"
         resources:

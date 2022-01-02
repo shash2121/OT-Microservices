@@ -35,7 +35,7 @@ spec:
       volumes:
       - name: volume
         hostPath:
-          path: /config.yaml
+          path: /home/opstree/project/OT-Microservices/attendance/k8s-manifests/config.yaml
           type: File
 ---
 apiVersion: v1

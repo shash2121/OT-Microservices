@@ -1,0 +1,20 @@
+pipeline{
+    agent any
+    environment{
+        VERSION = "${currentBuild.number}"
+        CREDS = credentials('docker')
+    }
+    stages{
+        stage("Deployment and Service Creation"){
+            steps{
+                dir("${env.WORKSPACE}/elasticsearch/k8s-manifests"){
+                script{
+                        sh '''
+                            kubectl apply -f deployment.yaml
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "empms-elasticsearch"
+  namespace: "ot-microservices"
+spec:
+  selector:
+    matchLabels:
+      app: "empms-elasticsearch"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "empms-elasticsearch"
+    spec:
+      containers:
+      - image: sha2121/empms-es:33
+        imagePullPolicy: Always
+        resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+        name: "empms-elasticsearch"
+        ports:
+        - containerPort: 9200
+        - containerPort: 9300
+        env:
+        - name: ES_JAVA_OPTS 
+          value: -Xmx512m -Xms512m
+        - name: ELASTIC_PASSWORD
+          value: elastic
+        volumeMounts:
+        - mountPath: /usr/share/elasticsearch/config/elasticsearch.yml
+          name: db-storage
+        - name: elasticsearch
+          mountPath: /usr/share/elasticsearch/data    
+      volumes:
+        - name: db-storage
+          hostPath:
+            path: ../elasticsearch.yaml
+            type: File
+        - name: elasticsearch
+          emptyDir: {}      
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-service
+  namespace: "ot-microservices"
+spec:
+  selector:
+    app: empms-elasticsearch
+  ports:
+    - protocol: TCP
+      port: 9200
+      targetPort: 9200
+    - protocol: TCP
+      port: 9300
+      targetPort: 9300  
+  type: ClusterIP            

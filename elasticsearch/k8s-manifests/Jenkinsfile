@@ -9,8 +9,10 @@ pipeline{
             steps{
                 dir("${env.WORKSPACE}/elasticsearch/k8s-manifests"){
                 sshagent(['k8s']) {
-                    sh 'kubectl apply -f deployment.yaml'
-                }
+                    script {    
+                        sh 'ssh ubuntu@ 18.219.188.209 kubectl apply -f deployment.yaml'
+                          }
+                    }
                 }
             }
         }

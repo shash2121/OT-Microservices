@@ -23,9 +23,9 @@ spec:
         - name: CONFIG_FILE
           value: "/app/config.yaml"
         volumeMounts:
-        - name: elasticsearch
+        - name: volume
           mountPath: /app/config.yaml  
-      volume:
+      volumes:
       - name: volume
         hostPath:
           path: ./config.yaml

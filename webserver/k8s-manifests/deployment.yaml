@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "empms-webserver"
+  namespace: "ot-microservices"
+spec:
+  selector:
+    matchLabels:
+      app: "empms-webserver"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "empms-webserver"
+    spec:
+      containers:
+      - image: sha2121/empms-webserver:1
+        imagePullPolicy: Always
+        name: "empms-webserver"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 150m
+            memory: 200Mi   
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webserver-service
+  namespace: "ot-microservices"
+spec:
+  selector:
+    app: empms-webserver
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+  type: NodePort
